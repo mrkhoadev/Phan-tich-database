@@ -144,4 +144,25 @@ ALTER TABLE ONLY public.courses
 --
 -- PostgreSQL database dump complete
 --
+-- Phần yêu cầu bài tập
+-- Thêm trường description
+ALTER TABLE courses ADD COLUMN description TEXT;
 
+-- Đổi tên trường detail thành content và ràng buộc chuyển thành NOT NULL
+ALTER TABLE courses
+    RENAME COLUMN detail TO content;
+
+-- Chuyển đổi ràng buộc của cột content thành NOT NULL
+ALTER TABLE courses
+    ALTER COLUMN content SET NOT NULL;
+	
+UPDATE teacher
+SET bio = 'Trợ giảng 2', updated_at = now()
+WHERE id = 3
+
+UPDATE teacher
+SET bio = 'Trợ giảng 1', updated_at = now()
+WHERE id = 2
+
+SELECT t.id, t.name, t.bio, c.name, c.active, t.created_at, t.updated_at FROM teacher AS t
+LEFT JOIN courses AS c ON t.id = c.teacher_id
